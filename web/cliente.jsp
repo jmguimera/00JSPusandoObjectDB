@@ -37,7 +37,7 @@
         <%
             String mensaje=(String)request.getAttribute("resultado");
             if(mensaje!=null){%>
-<!--            mensaje -->
+            mensaje 
             <%}%>
         <hr><ol> 
             <%
