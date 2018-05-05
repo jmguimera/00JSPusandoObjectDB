@@ -34,7 +34,11 @@
             Telefono: <input type="text" name="telefono" />
             <input type="submit" value="Agregar" />            
         </form>
-
+        <%
+            String mensaje=(String)request.getAttribute("resultado");
+            if(mensaje!=null){%>
+<!--            mensaje -->
+            <%}%>
         <hr><ol> 
             <%
             @SuppressWarnings("unchecked")
