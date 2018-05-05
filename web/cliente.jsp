@@ -7,6 +7,24 @@
 <html>
     <head>
         <title>JPA Guestbook Web Application Tutorial</title>
+        <style>
+        
+            form {
+                width: 500px;
+            }
+        
+            form input{
+                margin: .4em 0;            
+                display: block;
+                }
+            
+            div {
+                margin-top: 35px;
+            }
+        
+        form input boton
+        
+        </style>
     </head>
 
     <body>
