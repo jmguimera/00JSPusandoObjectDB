@@ -45,21 +45,32 @@ public class ClienteServlet extends HttpServlet {
             String resultado=""; 
             
             if (nif !=null) {
-                resultado=" ** El Cliente debe tener NIF para agregarlo a la Base de Datos **";                    
-
-                   em.getTransaction().begin();
-                   Cliente repetido=em.find(Cliente.class,nif);
                 
-                   if(repetido==null){
+                if(nif.isEmpty()){
+                    resultado=" ** El Cliente debe tener NIF para agregarlo a la Base de Datos **";                    
+                 }
+                  else{
+                     //buscamos en la base de datos un registro con la misma nif
+                     // si existe se carga el objeto Cliente en repetido, sino
+                     // repetido será null
+                        em.getTransaction().begin();
+                        Cliente repetido=em.find(Cliente.class,nif);
+                        
+                    // comporbamos que repetido sea null asi sabemos que el cliente
+                    // es nuevo y entonces grabamos el Nuevo Objeto Cliente
+                  if(repetido==null){
                         em.persist(new Cliente(nif,nombre,telefono));
                         em.getTransaction().commit();
                         resultado=" ** Registro grabado con exito **";
-                   } else{
+                  } 
+                   else{
                         resultado=" ** Ya existe un Registro en la Base Datos con el NIF: "+nif;
                    }
+                }
             }
  
-            // Muestra una lista de los Clientes guardados en la Base de Datos:
+            // Muestra una lista de los Clientes guardados en la Base de Datos
+            // Incluyendo el nuevo si hubo alguno.
             List<Cliente> clienteList =
                 em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
             
