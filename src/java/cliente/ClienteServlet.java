@@ -42,15 +42,26 @@ public class ClienteServlet extends HttpServlet {
             String nombre= request.getParameter("nombre");
             String telefono = request.getParameter("telefono");
  //           request.setAttribute("resultado",null);
-            if (nif != null) {
+
+            if (nif !=null) {
+                
+                   List<Cliente> repetido=null;
+                      repetido = (List<Cliente>) em.createQuery(
+                   "SELECT c FROM Cliente c WHERE c.nif=nif",
+                    Cliente.class).getResultList();
+                   
+                   if(repetido.size()==0){
                 em.getTransaction().begin();
                 em.persist(new Cliente(nif,nombre,telefono));
                 em.getTransaction().commit();
+                   } else{
+                   
+                   }
             }
  
             // Muestra una lista de los Clientes guardados en la Base de Datos:
             List<Cliente> clienteList =
-                em.createQuery("SELECT g FROM Cliente g", Cliente.class).getResultList();
+                em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
             request.setAttribute("clientes", clienteList);
             request.getRequestDispatcher("/cliente.jsp").forward(request, response);
  

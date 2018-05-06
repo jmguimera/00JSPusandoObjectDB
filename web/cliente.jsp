@@ -28,12 +28,16 @@
     </head>
 
     <body>
-        <form method="POST" action="ClienteServlet">
+        
+        <center><form method="POST" action="ClienteServlet">
+            <fieldset style="width: 500px">
+                <legend> ** Formulario para Agregar Cliente ** </legend>
             NIF: <input type="text" name="nif" />
             Nombre: <input type="text" name="nombre" />
             Telefono: <input type="text" name="telefono" />
             <input type="submit" value="Agregar" />            
-        </form>
+            </fieldset>
+        </form></center>
         <%
             String mensaje=(String)request.getAttribute("resultado");
             if(mensaje!=null){%>
