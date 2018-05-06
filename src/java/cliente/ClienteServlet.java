@@ -38,24 +38,26 @@ public class ClienteServlet extends HttpServlet {
         try {
             // Handle a new guest (if any):
             String nif = request.getParameter("nif");
-//            repetido=nif;
             String nombre= request.getParameter("nombre");
             String telefono = request.getParameter("telefono");
- //           request.setAttribute("resultado",null);
-
+ 
+            String mensaje=""; 
+            
             if (nif !=null) {
-                
-                   List<Cliente> repetido=null;
-                      repetido = (List<Cliente>) em.createQuery(
-                   "SELECT c FROM Cliente c WHERE c.nif=nif",
-                    Cliente.class).getResultList();
-                   
-                   if(repetido.size()==0){
+                mensaje=" ** El Cliente debe tener NIF para agregarlo a la Base de Datos **";                    
+
                 em.getTransaction().begin();
-                em.persist(new Cliente(nif,nombre,telefono));
-                em.getTransaction().commit();
+                Cliente repetido=em.find(Cliente.class,nif);
+                
+                
+                
+                   if(repetido==null){
+                    //    em.getTransaction().begin();
+                        em.persist(new Cliente(nif,nombre,telefono));
+                        em.getTransaction().commit();
+                        mensaje=" ** Registro grabado con exito **";
                    } else{
-                   
+                        mensaje=" ** Ya existe un Registro en la Base Datos con el NIF: "+nif;
                    }
             }
  
@@ -63,6 +65,7 @@ public class ClienteServlet extends HttpServlet {
             List<Cliente> clienteList =
                 em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
             request.setAttribute("clientes", clienteList);
+            request.setAttribute("mensaje",mensaje);
             request.getRequestDispatcher("/cliente.jsp").forward(request, response);
  
         }
