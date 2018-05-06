@@ -28,55 +28,52 @@ public class ClienteServlet extends HttpServlet {
         HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
  
-        // Obtain a PersistenceManager instance:
+        // Se obtiene una instancia del Gestor de Persistencia PersistenceManager
         EntityManagerFactory emf =
            (EntityManagerFactory)getServletContext().getAttribute("emf");
         EntityManager em = emf.createEntityManager();
         
-//        String repetido=null;
         
         try {
-            // Handle a new guest (if any):
+            // Procesa un cliente nuevo enviado por la pagina Web
+            // recogemos los parametros de los campos input y asignamos su valor
+            // a variables locales que seran procesadas
             String nif = request.getParameter("nif");
             String nombre= request.getParameter("nombre");
             String telefono = request.getParameter("telefono");
  
-            String mensaje=""; 
+            String resultado=""; 
             
             if (nif !=null) {
-                mensaje=" ** El Cliente debe tener NIF para agregarlo a la Base de Datos **";                    
+                resultado=" ** El Cliente debe tener NIF para agregarlo a la Base de Datos **";                    
 
-                em.getTransaction().begin();
-                Cliente repetido=em.find(Cliente.class,nif);
-                
-                
+                   em.getTransaction().begin();
+                   Cliente repetido=em.find(Cliente.class,nif);
                 
                    if(repetido==null){
-                    //    em.getTransaction().begin();
                         em.persist(new Cliente(nif,nombre,telefono));
                         em.getTransaction().commit();
-                        mensaje=" ** Registro grabado con exito **";
+                        resultado=" ** Registro grabado con exito **";
                    } else{
-                        mensaje=" ** Ya existe un Registro en la Base Datos con el NIF: "+nif;
+                        resultado=" ** Ya existe un Registro en la Base Datos con el NIF: "+nif;
                    }
             }
  
             // Muestra una lista de los Clientes guardados en la Base de Datos:
             List<Cliente> clienteList =
                 em.createQuery("SELECT c FROM Cliente c", Cliente.class).getResultList();
+            
+            request.setAttribute("mensaje",resultado);            
             request.setAttribute("clientes", clienteList);
-            request.setAttribute("mensaje",mensaje);
             request.getRequestDispatcher("/cliente.jsp").forward(request, response);
  
         }
-//        catch(UserException ue){
-//            request.setAttribute("resultado","El cliente con NIF: "+repetido+" ya Existe!!");
-//        }
         finally {
-            // Close the PersistenceManager:
-            if (em.getTransaction().isActive())
+            // Cierra el gestor de persistencia PersistenceManager:
+            if (em.getTransaction().isActive()){
                 em.getTransaction().rollback();
-            em.close();
+                em.close();
+            }
         }
     }
     

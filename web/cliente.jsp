@@ -39,16 +39,16 @@
             </fieldset>
         </form></center>
         <%
-            String mensaje=(String)request.getAttribute("resultado");
-            if(mensaje!=null){%>
-            mensaje 
+            String mensa=(String)request.getAttribute("mensaje");
+            if(mensa!=null){%>
+            <%= mensa %>
             <%}%>
         <hr><ol> 
             <%
             @SuppressWarnings("unchecked")
             List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
             for (Cliente cliente : clientes) { %>
-                <li> <%= cliente %> </li> <%
+                <li> <%= cliente.toString() %> </li> <%
             } %>
         </ol><hr>
 

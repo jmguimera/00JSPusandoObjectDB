@@ -7,12 +7,8 @@ import javax.persistence.Id;
  
 @Entity
 public class Cliente implements Serializable {
-
-
-
     private static final long serialVersionUID = 1L;
  
-    // Persistent Fields:
     @Id 
     String nif;
     private String nombre;
@@ -29,13 +25,14 @@ public class Cliente implements Serializable {
     }
     
  
-    // String Representation:
+    // Sobre escritura del metodo toString()
     @Override
     public String toString() {
-        return nif+" "+getNombre() + " telefono "+getTelefono();
+        return nif+" "+getNombre() + " "+getTelefono();
     }
     
     /**
+     * Devuelve el valor de NIF
      * @return nif
      */    
     public String getNif() {
@@ -43,6 +40,7 @@ public class Cliente implements Serializable {
     }
     
     /**
+     * Devuelve el valor de Nombre
      * @return nombre
      */
     public String getNombre() {
@@ -50,6 +48,7 @@ public class Cliente implements Serializable {
     }
 
     /**
+     * Asigna el valor 
      * @param el valor(nombre) que recibirá la propiedad this.nombre
      */
     public void setNombre(String nombre) {
@@ -57,6 +56,7 @@ public class Cliente implements Serializable {
     }
 
      /**
+     * Devuelve el valor del campo
      * @return devuelve el valor de la propiedad telefono
      */
     public String getTelefono() {
@@ -64,6 +64,7 @@ public class Cliente implements Serializable {
     }
 
     /**
+     * Asigna el valor
      * @param el telefono contiene el valor que recibira la propiedad telefono
      */
     public void setTelefono(String telefono) {
