@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cliente;
 
-import com.objectdb.o.UserException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,7 +21,7 @@ public class ClienteServlet extends HttpServlet {
         HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
  
-        // Se obtiene una instancia del Gestor de Persistencia PersistenceManager
+        // Se obtiene una instancia del Gestor de Persistencia 
         EntityManagerFactory emf =
            (EntityManagerFactory)getServletContext().getAttribute("emf");
         EntityManager em = emf.createEntityManager();
@@ -61,7 +54,7 @@ public class ClienteServlet extends HttpServlet {
                   if(repetido==null){
                         em.persist(new Cliente(nif,nombre,telefono));
                         em.getTransaction().commit();
-                        resultado=" ** Registro grabado con exito **";
+                        resultado=" ** Registro grabado con correctamente **";
                   } 
                    else{
                         resultado=" ** Ya existe un Registro en la Base Datos con el NIF: "+nif;
@@ -80,7 +73,7 @@ public class ClienteServlet extends HttpServlet {
  
         }
         finally {
-            // Cierra el gestor de persistencia PersistenceManager:
+            // Cierra el gestor de persistencia
             if (em.getTransaction().isActive()){
                 em.getTransaction().rollback();
                 em.close();
@@ -88,14 +81,11 @@ public class ClienteServlet extends HttpServlet {
         }
     }
     
-    
     @Override
     protected void doPost(
         HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
-
-
 
 }

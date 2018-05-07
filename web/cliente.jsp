@@ -21,9 +21,7 @@
             div {
                 margin-top: 35px;
             }
-        
-        form input boton
-        
+     
         </style>
     </head>
 
@@ -35,7 +33,7 @@
             NIF: <input type="text" name="nif" />
             Nombre: <input type="text" name="nombre" />
             Telefono: <input type="text" name="telefono" />
-            <input type="submit" value="Agregar" />            
+            <input type="submit" value="Grabar" />            
             </fieldset>
         </form></center>
         <%
@@ -43,14 +41,26 @@
             if(mensa!=null){%>
             <%= mensa %>
             <%}%>
-        <hr><ol> 
-            <%
-            @SuppressWarnings("unchecked")
+        <hr/>
+        <center>
+         <% @SuppressWarnings("unchecked")
             List<Cliente> clientes = (List<Cliente>)request.getAttribute("clientes");
-            for (Cliente cliente : clientes) { %>
-                <li> <%= cliente.toString() %> </li> <%
-            } %>
-        </ol><hr>
+            out.println("<table>");
+            out.println("<table border=\"1\">");
+            out.println("<th>"+"NIF"+"</th>"
+                       +"<th>"+"Nombre"+"</th>"
+                       +"<th>"+"Telefono"+"</th>");
+            
+            for (Cliente cliente : clientes) {
+              out.println("<tr>");                            
+              out.print("<td>"+cliente.getNif()+"</td>"
+                       +"<td>"+cliente.getNombre()+"</td>"
+                       +"<td>"+cliente.getTelefono()+"</td");
+              out.println("</tr>");
+            }
+              out.println("</table>");%>
+        </center>
+        <hr/>
 
      </body>
  </html>
